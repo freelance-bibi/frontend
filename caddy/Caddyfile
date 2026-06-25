@@ -1,0 +1,15 @@
+api.example.com {
+
+    encode gzip zstd
+
+    reverse_proxy freelance_api:8000
+}
+
+example.com {
+
+    encode gzip zstd
+
+    root * /srv
+    try_files {path} /index.html
+    file_server
+}

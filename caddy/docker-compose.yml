@@ -1,0 +1,33 @@
+services:
+  caddy:
+    image: caddy:2.10
+
+    container_name: freelance_caddy
+    hostname: freelance_caddy
+
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy-data:/data
+      - caddy-config:/config
+      # Собранный фронтенд (vite build -> frontend/dist) раздаётся как статика
+      - ../dist:/srv:ro
+
+    networks:
+      - freelance_network
+
+
+networks:
+  freelance_network:
+    external: true
+    name: freelance_network
+
+
+volumes:
+  caddy-data:
+  caddy-config:
